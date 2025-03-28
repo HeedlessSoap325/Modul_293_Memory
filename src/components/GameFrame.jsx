@@ -26,7 +26,7 @@ export default function GameFrame(){
             <div className="game-frame">
                 {[...Array(16)].map((_, index) => (
                     <GameCard
-                        imageName={"test.jpg"}
+                        imageName={"1.png"}
                         clear={clearCards}
                         flippedCardsCount={flippedCards.length}
                         flippedCards={flippedCards}
