@@ -1,28 +1,43 @@
 import {useEffect, useState} from "react";
 
-export default function GameCard({imageName, clear, flippedCardsCount, flippedCards, onClearCards}){
-    const [cardAsset, setCardAsset] = useState("card-back.png");
+export default function GameCard({imageName, flippedCards, onCheckCards, flag}){
+    const cardBackImgLocation = "card-back.png";
+    const cardEmptyImgLocation = "empty.png";
+    const [cardAsset, setCardAsset] = useState(cardBackImgLocation);
     const [flipped, setFlipped] = useState(false);
 
     useEffect(()=>{
-        if(flipped){
-            setCardAsset("empty.png");
-        }
-    },[clear])
+        switch (flag) {
+            case 0: //reset Card to Initial State Flag
+                setCardAsset(cardBackImgLocation);
+                setFlipped(false);
+                break;
 
-    useEffect(()=>{
-        setCardAsset("card-back.png");
-    }, [imageName])
+            case 1: //remove Card, because the two Cards are matching
+                if(flipped){
+                    setCardAsset(cardEmptyImgLocation);
+                }
+                break;
+
+            case 2: //reset Card, because the two Cards don't match
+                if (cardAsset !== cardEmptyImgLocation) {
+                    setCardAsset(cardBackImgLocation);
+                    setFlipped(false);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }, [flag])
 
     function flipCard(){
-        if(flippedCardsCount >= 2){return;}
-        if(cardAsset === "empty.png"){return;}
-        if(flipped){return;}
+        if((flippedCards.length >= 2) || (cardAsset === cardEmptyImgLocation) || flipped){return;}
 
         setCardAsset(imageName);
         flippedCards.push(imageName);
         setFlipped(true);
-        onClearCards();
+        onCheckCards();
     }
 
     return(
