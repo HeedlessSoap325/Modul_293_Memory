@@ -1,19 +1,17 @@
 import {useEffect, useState} from "react";
 
-export default function GameCard({imageName, clear}){
-    const [CardAsset, setCardAsset] = useState("card-back.png");
+export default function GameCard({imageName, clear, flippedCardsCount, setFlippedCardsCount}){
+    const [cardAsset, setCardAsset] = useState("card-back.png");
     const [flipped, setFlipped] = useState(false);
-    const [flippable, setFlippable] = useState(true);
 
     useEffect(()=>{
         if(flipped){
             setCardAsset("empty.png");
-            setFlippable(false);
         }
     },[clear])
 
     useEffect(()=>{
-        if(!flippable){return;}
+        if(cardAsset === "empty.png"){return;}
         if(flipped) {
             setCardAsset(imageName)
         }else {
@@ -21,7 +19,13 @@ export default function GameCard({imageName, clear}){
         }
     }, [flipped, imageName]);
 
+    function flipCard(){
+        if(flippedCardsCount >= 2){return;}
+        setFlipped(true);
+        setFlippedCardsCount(flippedCardsCount + 1);
+    }
+
     return(
-        <img src={CardAsset} height={150} width={150} alt={"Bild von einer Karte"} onClick={()=>setFlipped(!flipped)}/>
+        <img src={cardAsset} height={150} width={150} alt={"Bild von einer Karte"} onClick={flipCard}/>
     );
 }
