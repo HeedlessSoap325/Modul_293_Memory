@@ -1,19 +1,31 @@
 import GameCard from "./GameCard.jsx";
 import "../css/GameFrame.css";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 export default function GameFrame(){
-    const [clearCards, setClearCards] = useState(false);
-    const [flippedCardsCount, setFlippedCardsCount] = useState(0);
     const [flippedCards, setFlippedCards] = useState([]);
+    const [flag, setFlag] = useState(undefined);
+
+    function onCheckCards(){
+        if(flippedCards.length === 2 && (flippedCards.at(0) === flippedCards.at(1))) {
+            setTimeout(onClearCards, 500);
+        }else if (flippedCards.length === 2 && (flippedCards.at(0) !== flippedCards.at(1))){
+            setTimeout(onReturnCards, 750);
+        }
+    }
 
     function onClearCards(){
-        console.log()
-        if(flippedCards.length && (flippedCards.at(0) === flippedCards.at(1))) {
-            setClearCards(!clearCards);
-            setFlippedCardsCount(0);
-            setFlippedCards([]);
-        }
+        setFlag(1);
+
+        setTimeout(()=>setFlag(undefined), 300);
+        setFlippedCards([]);
+    }
+
+    function onReturnCards(){
+        setFlag(2);
+
+        setTimeout(()=>setFlag(undefined), 300);
+        setFlippedCards([]);
     }
 
     //TODO implement Logic to assign random pictures to cards
@@ -26,11 +38,10 @@ export default function GameFrame(){
             <div className="game-frame">
                 {[...Array(16)].map((_, index) => (
                     <GameCard
-                        imageName={"1.png"}
-                        clear={clearCards}
-                        flippedCardsCount={flippedCards.length}
+                        imageName={`${(index + 1) % 8}.png`}
                         flippedCards={flippedCards}
-                        onClearCards={onClearCards}
+                        onCheckCards={onCheckCards}
+                        flag={flag}
                     />
                 ))}
             </div>
