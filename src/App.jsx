@@ -1,10 +1,10 @@
 import './App.css'
-import GameCard from "./components/GameCard.jsx";
+import GameFrame from "./components/GameFrame.jsx";
 
 export default function App() {
     return (
         <>
-            <GameCard imageName={"test.jpg"}/>
+            <GameFrame />
         </>
     );
 }
