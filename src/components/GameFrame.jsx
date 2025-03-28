@@ -1,14 +1,19 @@
 import GameCard from "./GameCard.jsx";
 import "../css/GameFrame.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function GameFrame(){
     const [clearCards, setClearCards] = useState(false);
     const [flippedCardsCount, setFlippedCardsCount] = useState(0);
+    const [flippedCards, setFlippedCards] = useState([]);
 
     function onClearCards(){
-        setClearCards(!clearCards);
-        setFlippedCardsCount(0);
+        console.log()
+        if(flippedCards.length && (flippedCards.at(0) === flippedCards.at(1))) {
+            setClearCards(!clearCards);
+            setFlippedCardsCount(0);
+            setFlippedCards([]);
+        }
     }
 
     //TODO implement Logic to assign random pictures to cards
@@ -16,15 +21,16 @@ export default function GameFrame(){
     return (
         <div className={"game-wrapper"}>
             <div className={"game-side"}>
-                <input type={"button"} onClick={onClearCards}/>
+
             </div>
             <div className="game-frame">
                 {[...Array(16)].map((_, index) => (
                     <GameCard
                         imageName={"test.jpg"}
                         clear={clearCards}
-                        flippedCardsCount={flippedCardsCount}
-                        setFlippedCardsCount={setFlippedCardsCount}
+                        flippedCardsCount={flippedCards.length}
+                        flippedCards={flippedCards}
+                        onClearCards={onClearCards}
                     />
                 ))}
             </div>
