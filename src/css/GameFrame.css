@@ -1,0 +1,16 @@
+.game-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.game-frame{
+    width: 600px;
+    padding: 0px;
+    margin: 0px;
+    border: black thin solid;
+}
+
+.game-side{
+    width: calc(99% - 600px);
+}
