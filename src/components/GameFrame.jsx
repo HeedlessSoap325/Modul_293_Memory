@@ -1,10 +1,11 @@
 import GameCard from "./GameCard.jsx";
 import "../css/GameFrame.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function GameFrame(){
     const [flippedCards, setFlippedCards] = useState([]);
     const [flag, setFlag] = useState(undefined);
+    const [pictures, setPictures] = useState([]);
 
     function onCheckCards(){
         if(flippedCards.length === 2 && (flippedCards.at(0) === flippedCards.at(1))) {
@@ -28,7 +29,25 @@ export default function GameFrame(){
         setFlippedCards([]);
     }
 
-    //TODO implement Logic to assign random pictures to cards
+    function shuffleArray(array) {
+        const shuffledArray = [...array];
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        return shuffledArray;
+    }
+
+    function randomiseCards() {
+        const images = [1, 2, 3, 4, 5, 6, 7, 8];
+        const doubleImages = [...images, ...images];
+        const shuffledImages = shuffleArray(doubleImages);
+        setPictures(shuffledImages);
+    }
+
+    useEffect(() => {
+        randomiseCards()
+    }, []);
 
     return (
         <div className={"game-wrapper"}>
@@ -36,13 +55,15 @@ export default function GameFrame(){
 
             </div>
             <div className="game-frame">
-                {[...Array(16)].map((_, index) => (
-                    <GameCard
-                        imageName={`${(index + 1) % 8}.png`}
-                        flippedCards={flippedCards}
-                        onCheckCards={onCheckCards}
-                        flag={flag}
-                    />
+                {pictures.map((value, index) => (
+                    <div key={index} className={"game-card"}>
+                        <GameCard
+                            imageName={`${value}.png`}
+                            flippedCards={flippedCards}
+                            onCheckCards={onCheckCards}
+                            flag={flag}
+                        />
+                    </div>
                 ))}
             </div>
         </div>
