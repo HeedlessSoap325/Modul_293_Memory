@@ -1,16 +1,22 @@
-.game-wrapper{
-    width: 100%;
+.game-wrapper {
     display: flex;
-    flex-direction: row;
+    height: 100vh;
 }
 
-.game-frame{
+.game-side {
+    flex: 1;
+}
+
+.game-card{
+    width: 150px;
+    height: 150px;
+}
+
+.game-frame {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     width: 600px;
-    padding: 0px;
-    margin: 0px;
-    border: black thin solid;
-}
-
-.game-side{
-    width: calc(99% - 600px);
+    height: 600px;
+    padding-top: calc((100vh - 600px) / 2);
 }
