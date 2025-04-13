@@ -17,17 +17,18 @@ export default function GameFrame(){
         }
     }
 
-    function onClearCards(){
-        setFlag(1);
-
+    function dispatchFlag(flag){
+        setFlag(flag);
         setTimeout(()=>setFlag(undefined), 300);
+    }
+
+    function onClearCards(){
+        dispatchFlag(1);
         setFlippedCards([]);
     }
 
     function onReturnCards(){
-        setFlag(2);
-
-        setTimeout(()=>setFlag(undefined), 300);
+        dispatchFlag(2);
         setFlippedCards([]);
     }
 
