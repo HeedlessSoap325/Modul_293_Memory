@@ -8,10 +8,12 @@ export default function GameFrame(){
     const [flag, setFlag] = useState(undefined);
     const [pictures, setPictures] = useState([]);
     const [gameActive, setGameActive] = useState(false);
+    const [totalFlippedCards, setTotalFlippedCards] = useState(0);
 
     function onCheckCards(){
         if(flippedCards.length === 2 && (flippedCards.at(0) === flippedCards.at(1))) {
             setTimeout(onClearCards, 500);
+            setTotalFlippedCards(totalFlippedCards + 2);
         }else if (flippedCards.length === 2 && (flippedCards.at(0) !== flippedCards.at(1))){
             setTimeout(onReturnCards, 750);
         }
@@ -51,6 +53,15 @@ export default function GameFrame(){
     useEffect(() => {
         randomiseCards()
     }, []);
+
+    useEffect(()=>{
+        if (totalFlippedCards === 16){
+            setGameActive(false);
+            setTotalFlippedCards(0);
+            randomiseCards();
+            dispatchFlag(0);
+        }
+    },[totalFlippedCards])
 
     return (
         <div className={"game-wrapper"}>
