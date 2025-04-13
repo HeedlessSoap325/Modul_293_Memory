@@ -91,15 +91,17 @@ export default function Players({gameActive, setGameActive, flag, dispatchFlag})
     useEffect(()=>{
         switch (flag) {
             case 0: //reset to Initial State Flag
+                players[tempVars.currentPlayer][0] += 1;
                 determineWinners();
-                onClickNeuesSpiel();
                 break;
 
             case 1: //two Cards are matching
+                if(!gameActive){break;}
                 players[tempVars.currentPlayer][0] += 1;
                 break;
 
             case 2: //two Cards don't match
+                if (!gameActive){break;}
                 advancePlayer();
                 break;
 
@@ -131,7 +133,6 @@ export default function Players({gameActive, setGameActive, flag, dispatchFlag})
                 <p>{tempVars.playerNameErr}</p>
             </form>
                 <input type={"button"} value={"Spiel Starten"} onClick={onClickNeuesSpiel}/>
-                <input type={"button"} value={"Neues Spiel"} onClick={(e)=>dispatchFlag(0)}/>
             </div>
             <div className={"player-display-area"}>
                 {Object.entries(players).map(([key, value]) => (
