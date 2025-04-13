@@ -1,6 +1,7 @@
 import GameCard from "./GameCard.jsx";
 import "../css/GameFrame.css";
 import {useEffect, useState} from "react";
+import Players from "./Players.jsx";
 
 export default function GameFrame(){
     const [flippedCards, setFlippedCards] = useState([]);
@@ -53,7 +54,11 @@ export default function GameFrame(){
     return (
         <div className={"game-wrapper"}>
             <div className={"game-side"}>
-
+                <Players
+                    gameActive={gameActive}
+                    setGameActive={setGameActive}
+                    flag={flag}
+                    dispatchFlag={dispatchFlag}/>
             </div>
             <div className="game-frame">
                 {pictures.map((value, index) => (
