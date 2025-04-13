@@ -6,6 +6,7 @@ export default function GameFrame(){
     const [flippedCards, setFlippedCards] = useState([]);
     const [flag, setFlag] = useState(undefined);
     const [pictures, setPictures] = useState([]);
+    const [gameActive, setGameActive] = useState(false);
 
     function onCheckCards(){
         if(flippedCards.length === 2 && (flippedCards.at(0) === flippedCards.at(1))) {
@@ -62,6 +63,7 @@ export default function GameFrame(){
                             flippedCards={flippedCards}
                             onCheckCards={onCheckCards}
                             flag={flag}
+                            gameActive={gameActive}
                         />
                     </div>
                 ))}

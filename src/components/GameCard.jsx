@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export default function GameCard({imageName, flippedCards, onCheckCards, flag}){
+export default function GameCard({imageName, flippedCards, onCheckCards, flag, gameActive}){
     const cardBackImgLocation = "card-back.png";
     const cardEmptyImgLocation = "empty.png";
     const [cardAsset, setCardAsset] = useState(cardBackImgLocation);
@@ -32,7 +32,7 @@ export default function GameCard({imageName, flippedCards, onCheckCards, flag}){
     }, [flag])
 
     function flipCard(){
-        if((flippedCards.length >= 2) || (cardAsset === cardEmptyImgLocation) || flipped){return;}
+        if((flippedCards.length >= 2) || (cardAsset === cardEmptyImgLocation) || flipped || !gameActive){return;}
 
         setCardAsset(imageName);
         flippedCards.push(imageName);
