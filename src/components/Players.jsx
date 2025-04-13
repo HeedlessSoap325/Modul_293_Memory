@@ -59,9 +59,8 @@ export default function Players({gameActive, setGameActive, flag, dispatchFlag})
 
     function advancePlayer(){
         let newPlayerIndex = Object.entries(players).length - 1 > tempVars.currentPlayerIndex ? tempVars.currentPlayerIndex + 1 : 0;
-        console.log(newPlayerIndex)
         let newPlayer = Object.entries(players).at(newPlayerIndex)[0];
-        console.log(newPlayer)
+
         setTempVars({
             ...tempVars,
             currentPlayer: newPlayer,
@@ -69,10 +68,31 @@ export default function Players({gameActive, setGameActive, flag, dispatchFlag})
         })
     }
 
+    function determineWinners(){
+        let highestScore = -Infinity;
+        let topPlayers = [];
+
+        for (let player in players) {
+            let score = players[player][0];
+
+            if (score > highestScore) {
+                highestScore = score;
+                topPlayers = [player];
+            } else if (score === highestScore) {
+                topPlayers.push(player);
+            }
+        }
+
+        for (let player of topPlayers) {
+            players[player][1] += 1;
+        }
+    }
+
     useEffect(()=>{
         switch (flag) {
             case 0: //reset to Initial State Flag
-                onClickNeuesSpiel()
+                determineWinners();
+                onClickNeuesSpiel();
                 break;
 
             case 1: //two Cards are matching
